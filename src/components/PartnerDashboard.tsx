@@ -1,35 +1,35 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  Home, 
-  Inbox, 
-  Package, 
-  ShoppingBag, 
-  DollarSign, 
-  User, 
-  Bell, 
-  Settings, 
-  LogOut, 
-  Search, 
-  Filter, 
-  ChevronRight, 
-  MoreVertical, 
-  ArrowUpRight, 
-  Clock, 
-  CheckCircle2, 
-  AlertCircle, 
-  FileText, 
-  MessageSquare, 
-  Plus, 
-  Download, 
-  Trash2, 
-  Copy, 
-  Edit3, 
-  Eye, 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Globe, 
-  Linkedin, 
+import {
+  Home,
+  Inbox,
+  Package,
+  ShoppingBag,
+  DollarSign,
+  User,
+  Bell,
+  Settings,
+  LogOut,
+  Search,
+  Filter,
+  ChevronRight,
+  MoreVertical,
+  ArrowUpRight,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  FileText,
+  MessageSquare,
+  Plus,
+  Download,
+  Trash2,
+  Copy,
+  Edit3,
+  Eye,
+  MapPin,
+  Calendar,
+  Users,
+  Globe,
+  Linkedin,
   ShieldCheck,
   X,
   Send,
@@ -40,15 +40,15 @@ import {
   Phone,
   Mail
 } from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer, 
-  LineChart, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
   Line,
   AreaChart,
   Area,
@@ -59,6 +59,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
+import FeatureStatusIndicator from './FeatureStatusIndicator';
 
 // --- Types ---
 type View = 'home' | 'rfqs' | 'bookings' | 'services' | 'finances' | 'profile' | 'notifications' | 'settings';
@@ -130,15 +131,15 @@ const MOCK_DATA = {
     { label: 'Response Rate', value: '94%', trend: 'Stable', data: [92, 94, 93, 95, 94, 94, 94] },
   ],
   rfqs: [
-    { 
-      id: 'RFQ-2026-0412', 
-      eventName: "Global Tech Summit 2026", 
-      organizer: "EventEvo Inc.", 
-      service: "AV Equipment — Main Stage", 
+    {
+      id: 'RFQ-2026-0412',
+      eventName: "Global Tech Summit 2026",
+      organizer: "EventEvo Inc.",
+      service: "AV Equipment — Main Stage",
       category: "AV Equipment",
-      budget: "$8,000 – $12,000", 
-      eventDate: "March 15, 2026", 
-      deadline: "18h 42m", 
+      budget: "$8,000 – $12,000",
+      eventDate: "March 15, 2026",
+      deadline: "18h 42m",
       status: "NEW",
       receivedAt: "2 hours ago",
       location: "San Francisco Convention Center",
@@ -151,39 +152,39 @@ const MOCK_DATA = {
         "On-site technician for 3 days"
       ]
     },
-    { 
-      id: 'RFQ-2026-0389', 
-      eventName: "Startup Pitch Night", 
-      organizer: "TechHub DZ", 
-      service: "Microphones + PA System", 
+    {
+      id: 'RFQ-2026-0389',
+      eventName: "Startup Pitch Night",
+      organizer: "TechHub DZ",
+      service: "Microphones + PA System",
       category: "AV Equipment",
-      budget: "$1,200 – $2,500", 
-      eventDate: "March 22, 2026", 
-      deadline: "3 days", 
+      budget: "$1,200 – $2,500",
+      eventDate: "March 22, 2026",
+      deadline: "3 days",
       status: "RESPONDED",
       receivedAt: "1 day ago"
     },
-    { 
-      id: 'RFQ-2026-0355', 
-      eventName: "Corporate Gala Dinner", 
-      organizer: "Luxe Events", 
-      service: "Ambient Lighting & Sound", 
+    {
+      id: 'RFQ-2026-0355',
+      eventName: "Corporate Gala Dinner",
+      organizer: "Luxe Events",
+      service: "Ambient Lighting & Sound",
       category: "Lighting",
-      budget: "$4,000 – $6,000", 
-      eventDate: "April 05, 2026", 
-      deadline: "5 days", 
+      budget: "$4,000 – $6,000",
+      eventDate: "April 05, 2026",
+      deadline: "5 days",
       status: "ACCEPTED",
       receivedAt: "3 days ago"
     },
-    { 
-      id: 'RFQ-2026-0312', 
-      eventName: "Education Expo", 
-      organizer: "EduGlobal", 
-      service: "Projector Rentals (10 units)", 
+    {
+      id: 'RFQ-2026-0312',
+      eventName: "Education Expo",
+      organizer: "EduGlobal",
+      service: "Projector Rentals (10 units)",
       category: "AV Equipment",
-      budget: "$2,000 – $3,500", 
-      eventDate: "April 12, 2026", 
-      deadline: "Expired", 
+      budget: "$2,000 – $3,500",
+      eventDate: "April 12, 2026",
+      deadline: "Expired",
       status: "EXPIRED",
       receivedAt: "1 week ago"
     }
@@ -235,7 +236,7 @@ const STATUS_COLORS: Record<string, string> = {
 // --- Components ---
 
 const MetricCard = ({ label, value, trend, data, color = "emerald" }: any) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     className="bg-white p-6 rounded-[12px] shadow-sm border border-neutral-100 flex flex-col"
@@ -247,16 +248,16 @@ const MetricCard = ({ label, value, trend, data, color = "emerald" }: any) => (
       </div>
       <span className={cn(
         "text-xs font-bold px-2 py-1 rounded-full",
-        trend.startsWith('+') ? "bg-emerald-100 text-emerald-700" : 
-        trend === 'Stable' ? "bg-neutral-100 text-neutral-600" : "bg-red-100 text-red-700"
+        trend.startsWith('+') ? "bg-emerald-100 text-emerald-700" :
+          trend === 'Stable' ? "bg-neutral-100 text-neutral-600" : "bg-red-100 text-red-700"
       )}>
         {trend}
       </span>
     </div>
     <div className="h-12 w-full mt-auto flex items-end gap-1">
       {data.map((val: number, i: number) => (
-        <div 
-          key={i} 
+        <div
+          key={i}
           className={cn(
             "flex-1 rounded-t-sm transition-all duration-500",
             color === "emerald" ? "bg-emerald-400" : "bg-blue-400"
@@ -360,7 +361,7 @@ const HomeView = ({ onNavigate }: { onNavigate: (v: View) => void }) => (
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
             <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
             <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-            <Tooltip 
+            <Tooltip
               cursor={{ fill: '#F9FAFB' }}
               contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
             />
@@ -382,9 +383,9 @@ const RFQInboxView = ({ onSelectRFQ }: { onSelectRFQ: (rfq: RFQ) => void }) => {
           <div className="flex items-center gap-4 w-full md:w-auto">
             <div className="relative flex-1 md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={16} />
-              <input 
-                type="text" 
-                placeholder="Search requests..." 
+              <input
+                type="text"
+                placeholder="Search requests..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20"
@@ -419,8 +420,8 @@ const RFQInboxView = ({ onSelectRFQ }: { onSelectRFQ: (rfq: RFQ) => void }) => {
             </thead>
             <tbody className="divide-y divide-neutral-100">
               {MOCK_DATA.rfqs.map((rfq) => (
-                <tr 
-                  key={rfq.id} 
+                <tr
+                  key={rfq.id}
                   onClick={() => onSelectRFQ(rfq)}
                   className="hover:bg-neutral-50 transition-colors group cursor-pointer"
                 >
@@ -563,7 +564,7 @@ const RFQDetailView = ({ rfq, onBack }: { rfq: RFQ, onBack: () => void }) => {
               </div>
             </div>
             <div className="relative">
-              <textarea 
+              <textarea
                 className="w-full pl-4 pr-12 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[100px]"
                 placeholder="Type your message..."
               />
@@ -589,7 +590,7 @@ const RFQDetailView = ({ rfq, onBack }: { rfq: RFQ, onBack: () => void }) => {
               </div>
               <div>
                 <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-1 block">Description</label>
-                <textarea 
+                <textarea
                   className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[120px]"
                   placeholder="Describe your offer in detail..."
                 />
@@ -657,8 +658,8 @@ const BookingsView = ({ onSelectBooking }: { onSelectBooking: (b: Booking) => vo
             </thead>
             <tbody className="divide-y divide-neutral-100">
               {MOCK_DATA.bookings.map((booking) => (
-                <tr 
-                  key={booking.id} 
+                <tr
+                  key={booking.id}
                   onClick={() => onSelectBooking(booking)}
                   className="hover:bg-neutral-50 transition-colors group cursor-pointer"
                 >
@@ -761,8 +762,8 @@ const BookingDetailView = ({ booking, onBack }: { booking: Booking, onBack: () =
                       <div key={i} className="flex items-start gap-6">
                         <div className={cn(
                           "w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-4 border-white",
-                          m.status === 'completed' ? "bg-emerald-500 text-white" : 
-                          m.status === 'current' ? "bg-white border-emerald-500 text-emerald-500" : "bg-neutral-100 text-neutral-400"
+                          m.status === 'completed' ? "bg-emerald-500 text-white" :
+                            m.status === 'current' ? "bg-white border-emerald-500 text-emerald-500" : "bg-neutral-100 text-neutral-400"
                         )}>
                           {m.status === 'completed' ? <CheckCircle2 size={16} /> : <div className="w-2 h-2 rounded-full bg-current" />}
                         </div>
@@ -895,7 +896,7 @@ const ServicesView = () => {
             <div className="p-5">
               <h4 className="font-bold text-neutral-900 mb-1">{service.name}</h4>
               <p className="text-sm font-bold text-emerald-600 mb-4">{service.price}</p>
-              
+
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="p-2 bg-neutral-50 rounded-lg text-center">
                   <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Views</p>
@@ -953,14 +954,14 @@ const FinancesView = () => {
             <AreaChart data={MOCK_DATA.revenueData}>
               <defs>
                 <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.1}/>
-                  <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.1} />
+                  <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
               <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
               />
               <Area type="monotone" dataKey="revenue" stroke="#10B981" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
@@ -1065,7 +1066,7 @@ const ProfileView = () => {
             <div className="space-y-4">
               <div>
                 <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-1 block">Description</label>
-                <textarea 
+                <textarea
                   className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[120px]"
                   defaultValue="Leading provider of professional AV equipment for corporate events, summits, and gala dinners. Over 15 years of experience in the industry."
                 />
@@ -1237,37 +1238,38 @@ export default function PartnerDashboard() {
       <aside className="w-64 border-r border-neutral-100 flex flex-col py-6 bg-white shrink-0">
         <nav className="flex-1 px-3 space-y-1">
           {sidebarItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                setActiveView(item.id as View);
-                setSelectedRFQ(null);
-              }}
-              className={cn(
-                "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all",
-                activeView === item.id 
-                  ? "bg-emerald-50 text-emerald-600" 
-                  : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900"
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <item.icon size={20} />
-                {item.label}
-              </div>
-              {item.badge && (
-                <span className={cn(
-                  "text-[10px] px-1.5 py-0.5 rounded-full",
-                  activeView === item.id ? "bg-emerald-500 text-white" : "bg-neutral-100 text-neutral-500"
-                )}>
-                  {item.badge}
-                </span>
-              )}
-            </button>
+            <FeatureStatusIndicator key={item.id} featureId={`partner-${item.id}`} className="px-4">
+              <button
+                onClick={() => {
+                  setActiveView(item.id as View);
+                  setSelectedRFQ(null);
+                }}
+                className={cn(
+                  "w-full flex items-center justify-between py-3 rounded-xl text-sm font-bold transition-all",
+                  activeView === item.id
+                    ? "bg-emerald-50 text-emerald-600 px-4"
+                    : "text-neutral-500 hover:text-neutral-900 px-4"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <item.icon size={20} />
+                  {item.label}
+                </div>
+                {item.badge && (
+                  <span className={cn(
+                    "text-[10px] px-1.5 py-0.5 rounded-full",
+                    activeView === item.id ? "bg-emerald-500 text-white" : "bg-neutral-100 text-neutral-500"
+                  )}>
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            </FeatureStatusIndicator>
           ))}
         </nav>
 
         <div className="px-3 mt-auto pt-6 border-t border-neutral-100">
-          <button 
+          <button
             onClick={logout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-neutral-500 hover:bg-red-50 hover:text-red-600 transition-all"
           >
