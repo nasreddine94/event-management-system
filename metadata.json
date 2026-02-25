@@ -1,0 +1,7 @@
+{
+  "name": "EventEvo - Unified Event Ecosystem",
+  "description": "A comprehensive event management platform connecting attendees, exhibitors, managers, and partners in one seamless ecosystem.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
