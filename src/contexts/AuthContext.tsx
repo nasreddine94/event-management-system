@@ -23,17 +23,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string) => {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    if (res.ok) {
-      const userData = await res.json();
+    // Local mock login logic for frontend-only configurator
+    const mockUsers: User[] = [
+      { id: '1', name: 'John Manager', email: 'manager@example.com', role: 'MANAGER', company: 'EventPro', avatar: 'https://picsum.photos/seed/manager/100' },
+      { id: '2', name: 'Alice Attendee', email: 'alice@example.com', role: 'ATTENDEE', company: 'TechCorp', avatar: 'https://picsum.photos/seed/alice/100' },
+      { id: '3', name: 'Bob Exhibitor', email: 'bob@example.com', role: 'EXHIBITOR', company: 'GadgetCo', avatar: 'https://picsum.photos/seed/bob/100' },
+      { id: '4', name: 'Partner Sam', email: 'sam@example.com', role: 'PARTNER', company: 'RentAll', avatar: 'https://picsum.photos/seed/sam/100' },
+    ];
+
+    const userData = mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+    if (userData) {
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
     } else {
-      throw new Error('Login failed');
+      throw new Error('User not found. Use manager@example.com or alice@example.com');
     }
   };
 

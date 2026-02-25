@@ -183,6 +183,58 @@ export const MOCK_USER: UserProfile = {
     role: 'User'
 };
 
+export const MOCK_USERS: UserProfile[] = [
+    MOCK_USER,
+    {
+        id: '1',
+        firstName: 'John',
+        lastName: 'Manager',
+        email: 'manager@example.com',
+        phone: '+213 661 112 233',
+        jobTitle: 'Event Director',
+        company: 'EventPro',
+        bio: 'Senior event manager with 10 years of experience.',
+        avatar: 'https://picsum.photos/seed/manager/200',
+        role: 'Attendee' // Using Attendee/User roles as base types, but specific components handle MANAGER role via a separate 'User' type if needed.
+    },
+    {
+        id: '2',
+        firstName: 'Alice',
+        lastName: 'Attendee',
+        email: 'alice@example.com',
+        phone: '+213 661 112 234',
+        jobTitle: 'Software Engineer',
+        company: 'TechCorp',
+        bio: 'Tech enthusiast.',
+        avatar: 'https://picsum.photos/seed/alice/200',
+        role: 'Attendee'
+    },
+    {
+        id: '3',
+        firstName: 'Bob',
+        lastName: 'Exhibitor',
+        email: 'bob@example.com',
+        phone: '+213 661 112 235',
+        jobTitle: 'Sales Manager',
+        company: 'GadgetCo',
+        bio: 'Exhibitor lead.',
+        avatar: 'https://picsum.photos/seed/bob/200',
+        role: 'User' // Exhibitor logic often keys off specific email or another prop
+    },
+    {
+        id: '4',
+        firstName: 'Sam',
+        lastName: 'Partner',
+        email: 'sam@example.com',
+        phone: '+213 661 112 236',
+        jobTitle: 'Operations Manager',
+        company: 'RentAll',
+        bio: 'Strategic partner.',
+        avatar: 'https://picsum.photos/seed/sam/200',
+        role: 'User'
+    }
+];
+
 export const MOCK_SESSIONS: Session[] = [
     {
         id: 's1',

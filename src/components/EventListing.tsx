@@ -4,14 +4,10 @@ import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { formatDate } from '../lib/utils';
 
-export default function EventListing() {
-  const [events, setEvents] = useState<Event[]>([]);
+import { MOCK_EVENTS } from '../data/mockData';
 
-  useEffect(() => {
-    fetch('/api/events')
-      .then(res => res.json())
-      .then(setEvents);
-  }, []);
+export default function EventListing() {
+  const [events, setEvents] = useState<Event[]>(MOCK_EVENTS);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -30,8 +26,8 @@ export default function EventListing() {
             className="group glass rounded-3xl overflow-hidden card-hover"
           >
             <div className="relative h-48">
-              <img 
-                src={event.image} 
+              <img
+                src={event.image}
                 alt={event.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 referrerPolicy="no-referrer"
@@ -43,7 +39,7 @@ export default function EventListing() {
             <div className="p-6">
               <h3 className="text-xl font-bold mb-2">{event.title}</h3>
               <p className="text-neutral-500 text-sm line-clamp-2 mb-4">{event.description}</p>
-              
+
               <div className="flex flex-col gap-2 mb-6">
                 <div className="flex items-center gap-2 text-sm text-neutral-600">
                   <Calendar size={16} className="text-brand-primary" />
