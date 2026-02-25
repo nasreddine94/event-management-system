@@ -1,27 +1,27 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  Home, 
-  Users, 
-  Store, 
-  BarChart3, 
-  Target, 
-  Bell, 
-  Settings, 
-  LogOut, 
-  Search, 
-  Scan, 
-  MoreVertical, 
-  Filter, 
-  Download, 
-  Plus, 
-  Mail, 
-  Phone, 
-  Globe, 
-  Linkedin, 
-  Twitter, 
-  FileText, 
-  CheckCircle2, 
-  AlertCircle, 
+import {
+  Home,
+  Users,
+  Store,
+  BarChart3,
+  Target,
+  Bell,
+  Settings,
+  LogOut,
+  Search,
+  Scan,
+  MoreVertical,
+  Filter,
+  Download,
+  Plus,
+  Mail,
+  Phone,
+  Globe,
+  Linkedin,
+  Twitter,
+  FileText,
+  CheckCircle2,
+  AlertCircle,
   ChevronRight,
   X,
   Calendar,
@@ -31,18 +31,18 @@ import {
   Trash2,
   Eye
 } from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer, 
-  PieChart, 
-  Pie, 
-  Cell, 
-  LineChart, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
   Line,
   AreaChart,
   Area
@@ -130,7 +130,7 @@ const STATUS_COLORS = {
 // --- Components ---
 
 const MetricCard = ({ label, value, trend, data, color = "emerald" }: any) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     className="bg-white p-6 rounded-[12px] shadow-sm border border-neutral-100 flex flex-col"
@@ -142,16 +142,16 @@ const MetricCard = ({ label, value, trend, data, color = "emerald" }: any) => (
       </div>
       <span className={cn(
         "text-xs font-bold px-2 py-1 rounded-full",
-        trend.startsWith('+') ? "bg-emerald-100 text-emerald-700" : 
-        trend === 'Stable' ? "bg-neutral-100 text-neutral-600" : "bg-red-100 text-red-700"
+        trend.startsWith('+') ? "bg-emerald-100 text-emerald-700" :
+          trend === 'Stable' ? "bg-neutral-100 text-neutral-600" : "bg-red-100 text-red-700"
       )}>
         {trend}
       </span>
     </div>
     <div className="h-12 w-full mt-auto flex items-end gap-1">
       {data.map((val: number, i: number) => (
-        <div 
-          key={i} 
+        <div
+          key={i}
           className={cn(
             "flex-1 rounded-t-sm transition-all duration-500",
             color === "emerald" ? "bg-emerald-400" : "bg-blue-400"
@@ -302,8 +302,8 @@ const LeadsView = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredLeads = useMemo(() => {
-    return MOCK_DATA.leads.filter(l => 
-      l.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    return MOCK_DATA.leads.filter(l =>
+      l.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       l.company.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery]);
@@ -316,9 +316,9 @@ const LeadsView = () => {
           <div className="flex items-center gap-4 w-full md:w-auto">
             <div className="relative flex-1 md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={16} />
-              <input 
-                type="text" 
-                placeholder="Search leads..." 
+              <input
+                type="text"
+                placeholder="Search leads..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20"
@@ -352,8 +352,8 @@ const LeadsView = () => {
             </thead>
             <tbody className="divide-y divide-neutral-100">
               {filteredLeads.map((lead) => (
-                <tr 
-                  key={lead.id} 
+                <tr
+                  key={lead.id}
                   onClick={() => setSelectedLead(lead)}
                   className="hover:bg-neutral-50 transition-colors group cursor-pointer"
                 >
@@ -394,14 +394,14 @@ const LeadsView = () => {
       <AnimatePresence>
         {selectedLead && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedLead(null)}
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
             />
-            <motion.div 
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -438,12 +438,12 @@ const LeadsView = () => {
                     <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2 block">Lead Score</label>
                     <div className="grid grid-cols-3 gap-2">
                       {(['Hot', 'Warm', 'Cold'] as LeadScore[]).map(score => (
-                        <button 
+                        <button
                           key={score}
                           className={cn(
                             "py-2 rounded-xl text-xs font-bold border transition-all",
-                            selectedLead.score === score 
-                              ? "bg-emerald-500 text-white border-emerald-500" 
+                            selectedLead.score === score
+                              ? "bg-emerald-500 text-white border-emerald-500"
                               : "bg-white text-neutral-500 border-neutral-200 hover:border-emerald-500"
                           )}
                         >
@@ -464,7 +464,7 @@ const LeadsView = () => {
 
                   <div>
                     <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2 block">Notes</label>
-                    <textarea 
+                    <textarea
                       className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[120px]"
                       placeholder="Add notes about this lead..."
                       defaultValue={selectedLead.notes}
@@ -534,7 +534,7 @@ const BoothView = () => {
 
             <div>
               <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2 block">Description</label>
-              <textarea 
+              <textarea
                 className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[160px]"
                 placeholder="Tell attendees about your company..."
               />
@@ -703,14 +703,14 @@ const AnalyticsView = () => {
               <AreaChart data={lineData}>
                 <defs>
                   <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.1} />
+                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
                 <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                 />
                 <Area type="monotone" dataKey="leads" stroke="#10B981" strokeWidth={3} fillOpacity={1} fill="url(#colorLeads)" />
@@ -835,7 +835,7 @@ const SponsorshipView = () => (
                 <span className="text-xs font-bold text-emerald-600">{track.trend}</span>
               </div>
               <div className="h-2 bg-neutral-100 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: '70%' }}
                   className="h-full bg-emerald-500 rounded-full"
@@ -864,10 +864,10 @@ const NotificationsView = () => (
           <div className={cn(
             "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
             n.type === 'Leads' ? "bg-emerald-100 text-emerald-600" :
-            n.type === 'Meetings' ? "bg-blue-100 text-blue-600" : "bg-orange-100 text-orange-600"
+              n.type === 'Meetings' ? "bg-blue-100 text-blue-600" : "bg-orange-100 text-orange-600"
           )}>
-            {n.type === 'Leads' ? <Users size={20} /> : 
-             n.type === 'Meetings' ? <Calendar size={20} /> : <AlertCircle size={20} />}
+            {n.type === 'Leads' ? <Users size={20} /> :
+              n.type === 'Meetings' ? <Calendar size={20} /> : <AlertCircle size={20} />}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex justify-between items-start mb-1">
@@ -886,6 +886,8 @@ const NotificationsView = () => (
 );
 
 // --- Main Dashboard ---
+
+import FeatureStatusIndicator from './FeatureStatusIndicator';
 
 export default function ExhibitorDashboard() {
   const { user, logout } = useAuth();
@@ -927,34 +929,35 @@ export default function ExhibitorDashboard() {
 
         <nav className="flex-1 px-3 space-y-1">
           {sidebarItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveView(item.id as View)}
-              className={cn(
-                "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all",
-                activeView === item.id 
-                  ? "bg-emerald-50 text-emerald-600" 
-                  : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900"
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <item.icon size={20} />
-                {item.label}
-              </div>
-              {item.badge && (
-                <span className={cn(
-                  "text-[10px] px-1.5 py-0.5 rounded-full",
-                  activeView === item.id ? "bg-emerald-500 text-white" : "bg-neutral-100 text-neutral-500"
-                )}>
-                  {item.badge}
-                </span>
-              )}
-            </button>
+            <FeatureStatusIndicator key={item.id} featureId={`exhibitor-${item.id}`} className="px-4">
+              <button
+                onClick={() => setActiveView(item.id as View)}
+                className={cn(
+                  "w-full flex items-center justify-between py-3 rounded-xl text-sm font-bold transition-all",
+                  activeView === item.id
+                    ? "bg-emerald-50 text-emerald-600 px-4"
+                    : "text-neutral-500 hover:text-neutral-900 px-4"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <item.icon size={20} />
+                  {item.label}
+                </div>
+                {item.badge && (
+                  <span className={cn(
+                    "text-[10px] px-1.5 py-0.5 rounded-full",
+                    activeView === item.id ? "bg-emerald-500 text-white" : "bg-neutral-100 text-neutral-500"
+                  )}>
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            </FeatureStatusIndicator>
           ))}
         </nav>
 
         <div className="px-3 mt-auto pt-6 border-t border-neutral-100">
-          <button 
+          <button
             onClick={logout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-neutral-500 hover:bg-red-50 hover:text-red-600 transition-all"
           >
@@ -971,9 +974,9 @@ export default function ExhibitorDashboard() {
           <div className="flex items-center gap-4 flex-1 max-w-xl">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={18} />
-              <input 
-                type="text" 
-                placeholder="Search leads, meetings, or assets..." 
+              <input
+                type="text"
+                placeholder="Search leads, meetings, or assets..."
                 className="w-full pl-10 pr-4 py-2 bg-neutral-50 border-none rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
@@ -997,10 +1000,10 @@ export default function ExhibitorDashboard() {
                 <p className="text-sm font-bold text-neutral-900 leading-none">{MOCK_DATA.exhibitor.companyName}</p>
                 <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mt-1">EXHIBITOR</p>
               </div>
-              <img 
-                src={user?.avatar || "https://i.pravatar.cc/150?u=tech"} 
-                className="w-10 h-10 rounded-xl border-2 border-white shadow-sm" 
-                alt="" 
+              <img
+                src={user?.avatar || "https://i.pravatar.cc/150?u=tech"}
+                className="w-10 h-10 rounded-xl border-2 border-white shadow-sm"
+                alt=""
               />
             </div>
           </div>
@@ -1043,7 +1046,7 @@ export default function ExhibitorDashboard() {
         {/* Sync Banner */}
         <AnimatePresence>
           {isSyncing && (
-            <motion.div 
+            <motion.div
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 50, opacity: 0 }}

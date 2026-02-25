@@ -53,6 +53,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { cn } from '../lib/utils';
+import FeatureStatusIndicator from './FeatureStatusIndicator';
 import {
   MOCK_EVENTS,
   MOCK_USER,
@@ -154,22 +155,24 @@ export default function AttendeeDashboard() {
           ))}
         </div>
 
-        {/* Navigation Items */}
-        <nav className="space-y-1">
+        <nav className="space-y-1 mt-6">
           {sections[activeRole].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all",
-                activeSection === item.id
-                  ? "bg-neutral-900 text-white shadow-lg shadow-neutral-900/10"
-                  : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900"
-              )}
-            >
-              <item.icon size={20} className={activeSection === item.id ? "text-white" : "text-neutral-400"} />
-              {item.label}
-            </button>
+            <FeatureStatusIndicator key={item.id} featureId={`attendee-${activeRole}-${item.id}`} className="px-4">
+              <button
+                onClick={() => setActiveSection(item.id)}
+                className={cn(
+                  "w-full flex items-center justify-between py-3 rounded-xl text-sm font-bold transition-all",
+                  activeSection === item.id
+                    ? "bg-neutral-900 text-white shadow-lg shadow-neutral-900/10 px-4"
+                    : "text-neutral-500 hover:text-neutral-900 px-4"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <item.icon size={20} className={activeSection === item.id ? "text-white" : "text-neutral-400"} />
+                  {item.label}
+                </div>
+              </button>
+            </FeatureStatusIndicator>
           ))}
         </nav>
       </div>

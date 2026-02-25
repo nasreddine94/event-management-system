@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
+import FeatureStatusIndicator from './FeatureStatusIndicator';
 
 import WebsiteBuilder from './WebsiteBuilder';
 import ContentPages from './ContentPages';
@@ -919,18 +920,20 @@ export default function ManagerDashboard() {
         {sidebarItems.map((item) => (
           <React.Fragment key={item.id}>
             {item.separator && <div className="my-4 border-t border-neutral-100 mx-4" />}
-            <button
-              onClick={() => setActiveTab(item.id)}
-              className={cn(
-                "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all relative",
-                activeTab === item.id
-                  ? "text-brand-primary bg-brand-primary/5 border-r-2 border-brand-primary"
-                  : "text-neutral-500 hover:bg-neutral-50"
-              )}
-            >
-              <item.icon size={18} className={activeTab === item.id ? "text-brand-primary" : "text-neutral-400"} />
-              {item.label}
-            </button>
+            <FeatureStatusIndicator featureId={`manager-primary-${item.id}`} className="px-6">
+              <button
+                onClick={() => setActiveTab(item.id)}
+                className={cn(
+                  "flex items-center gap-3 py-3 text-sm font-medium transition-all relative w-full",
+                  activeTab === item.id
+                    ? "text-brand-primary border-r-2 border-brand-primary"
+                    : "text-neutral-500 hover:text-neutral-900"
+                )}
+              >
+                <item.icon size={18} className={activeTab === item.id ? "text-brand-primary" : "text-neutral-400"} />
+                {item.label}
+              </button>
+            </FeatureStatusIndicator>
           </React.Fragment>
         ))}
 
@@ -956,17 +959,19 @@ export default function ManagerDashboard() {
                     {subItem.hasChevron && <ChevronRight size={14} className="text-neutral-300 group-hover:text-neutral-500 transition-colors" />}
                   </div>
                 ) : (
-                  <button
-                    onClick={() => setActiveSubTab(subItem.id)}
-                    className={cn(
-                      "px-6 py-2.5 text-sm font-medium transition-all text-left",
-                      activeSubTab === subItem.id
-                        ? "text-brand-primary bg-white shadow-sm"
-                        : "text-neutral-600 hover:text-neutral-900"
-                    )}
-                  >
-                    {subItem.label}
-                  </button>
+                  <FeatureStatusIndicator featureId={`manager-sub-${subItem.id}`} className="px-6">
+                    <button
+                      onClick={() => setActiveSubTab(subItem.id)}
+                      className={cn(
+                        "py-2.5 text-sm font-medium transition-all text-left w-full",
+                        activeSubTab === subItem.id
+                          ? "text-brand-primary font-bold"
+                          : "text-neutral-600 hover:text-neutral-900"
+                      )}
+                    >
+                      {subItem.label}
+                    </button>
+                  </FeatureStatusIndicator>
                 )}
                 {subItem.separator && <div className="my-4 border-t border-neutral-100 mx-6" />}
               </React.Fragment>
